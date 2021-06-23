@@ -35,11 +35,15 @@ const App = () => {
     <div>
       <UserInput
         name="Name"
+        prevName={prevName}
         buttonText="Submit"
         handleAddUser={handleAddUser}
       />
-      <UserItem users={users} handleEditUser={handleEditUser} />
-      {/* <UsersList /> */}
+      <UserItem
+        prevName={prevName}
+        users={users}
+        handleEditUser={handleEditUser}
+      />
     </div>
   );
 };

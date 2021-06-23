@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 interface UserInputProps {
   name?: string;
-  prevName?: string;
+  prevName: string;
   buttonText: string;
   handleAddUser?: (values: { name: string }) => void;
   handleEditUser?: (values: { name: string }) => void;
@@ -21,7 +21,7 @@ const UserInput = ({
   // formik
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: prevName,
     },
     validationSchema: Yup.object({
       name: Yup.string()

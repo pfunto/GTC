@@ -4,11 +4,12 @@ import { User } from '../App';
 import UserInput from '../components/UserInput';
 
 interface UserItemProps {
-  handleEditUser: (values: { name: string }) => void;
+  prevName: string;
   users: User[];
+  handleEditUser: (values: { name: string }) => void;
 }
 
-const UserItem = ({ users, handleEditUser }: UserItemProps) => {
+const UserItem = ({ prevName, users, handleEditUser }: UserItemProps) => {
   return (
     <StyledUserItem>
       {users.map((user, i) => {
@@ -16,7 +17,11 @@ const UserItem = ({ users, handleEditUser }: UserItemProps) => {
         return (
           <StyledUser key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
-            <UserInput buttonText="Edit" handleEditUser={handleEditUser} />
+            <UserInput
+              prevName={prevName}
+              buttonText="Edit"
+              handleEditUser={handleEditUser}
+            />
             {name} / {id}
           </StyledUser>
         );
