@@ -1,18 +1,20 @@
-import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 // import styled from 'styled-components';
+import { EditUserValues } from '../App';
 
 interface UserInputProps {
-  name?: string;
+  label?: string;
+  id: number;
   prevName: string;
   buttonText: string;
   handleAddUser?: (values: { name: string }) => void;
-  handleEditUser?: (values: { name: string }) => void;
+  handleEditUser?: (id: number, values: EditUserValues) => void;
 }
 
 const UserInput = ({
-  name,
+  label,
+  id,
   prevName,
   buttonText,
   handleAddUser,
@@ -29,12 +31,11 @@ const UserInput = ({
         .required('Required'),
     }),
     onSubmit: (values: { name: string }) => {
-      if (handleAddUser) {
-        handleAddUser(values);
-      }
-      if (handleEditUser) {
-        handleEditUser(values);
-      }
+      const { name } = values;
+
+      handleAddUser && handleAddUser(values);
+
+      id && handleEditUser && handleEditUser(id, { name });
 
       // alert(JSON.stringify(values, null, 2));
     },
@@ -43,7 +44,7 @@ const UserInput = ({
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="name">{name}</label>
+        <label htmlFor="name">{label}</label>
         <input id="name" type="text" {...formik.getFieldProps('name')} />
 
         <button type="submit">{buttonText}</button>

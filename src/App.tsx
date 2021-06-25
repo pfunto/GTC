@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 // import styled from 'styled-components';
 import UserInput from './components/UserInput';
-import UserItem from './components/UserItem';
+import UserList from './components/UserList';
 
 export interface User {
   id: number;
+  name: string;
+}
+
+export interface EditUserValues {
   name: string;
 }
 
@@ -25,21 +29,32 @@ const App = () => {
     setUsers([...users, { id, name }]);
   }
 
-  function handleEditUser(values: { name: string }) {
+  function handleEditUser(id: number, values: EditUserValues) {
+    const { name } = values;
     let newArr = [...users];
-    console.log(id);
+    const curObject = newArr.find((obj) => {
+      return obj.id === id;
+    });
+
+    if (curObject) {
+      curObject.name = name;
+    }
+
+    console.log('Edited name: ', curObject);
     // const userId = newArr.findIndex();
   }
 
   return (
     <div>
       <UserInput
-        name="Name"
+        label="Name"
+        id={id}
         prevName={prevName}
         buttonText="Submit"
         handleAddUser={handleAddUser}
       />
-      <UserItem
+
+      <UserList
         prevName={prevName}
         users={users}
         handleEditUser={handleEditUser}

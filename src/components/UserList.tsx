@@ -1,23 +1,24 @@
-import React from 'react';
 import styled from 'styled-components';
 import { User } from '../App';
-import UserInput from '../components/UserInput';
+import UserInput from './UserInput';
+import { EditUserValues } from '../App';
 
-interface UserItemProps {
+interface UserListProps {
   prevName: string;
   users: User[];
-  handleEditUser: (values: { name: string }) => void;
+  handleEditUser: (id: number, values: EditUserValues) => void;
 }
 
-const UserItem = ({ prevName, users, handleEditUser }: UserItemProps) => {
+const UserList = ({ prevName, users, handleEditUser }: UserListProps) => {
   return (
-    <StyledUserItem>
+    <StyledUserList>
       {users.map((user, i) => {
         const { name, id } = user;
         return (
           <StyledUser key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <UserInput
+              id={id}
               prevName={prevName}
               buttonText="Edit"
               handleEditUser={handleEditUser}
@@ -26,12 +27,13 @@ const UserItem = ({ prevName, users, handleEditUser }: UserItemProps) => {
           </StyledUser>
         );
       })}
-    </StyledUserItem>
+    </StyledUserList>
   );
 };
 
-const StyledUserItem = styled.div`
+const StyledUserList = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const StyledUser = styled.div`
@@ -39,4 +41,4 @@ const StyledUser = styled.div`
   align-items: center;
 `;
 
-export default UserItem;
+export default UserList;
