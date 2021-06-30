@@ -35,7 +35,7 @@ const UserInput = ({
 
       handleAddUser && handleAddUser(values);
 
-      id && handleEditUser && handleEditUser(id, { name });
+      handleEditUser && handleEditUser(id, { name });
 
       // alert(JSON.stringify(values, null, 2));
     },

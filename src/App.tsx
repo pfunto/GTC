@@ -41,7 +41,6 @@ const App = () => {
     }
 
     console.log('Edited name: ', curObject);
-    // const userId = newArr.findIndex();
   }
 
   return (
