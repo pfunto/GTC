@@ -6,6 +6,7 @@ import UserList from './components/UserList';
 export interface User {
   id: number;
   name: string;
+  isEdit: boolean;
 }
 
 export interface EditUserValues {
@@ -26,7 +27,7 @@ const App = () => {
   function handleAddUser(values: { name: string }) {
     const { name } = values;
     setPrevName(name);
-    setUsers([...users, { id, name }]);
+    setUsers([...users, { id, name, isEdit: false }]);
   }
 
   function handleEditUser(id: number, values: EditUserValues) {
@@ -38,7 +39,10 @@ const App = () => {
 
     if (curObject) {
       curObject.name = name;
+      curObject.isEdit = true;
     }
+
+    setUsers([...newArr]);
 
     console.log('Edited name: ', curObject);
   }
