@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { User } from '../App';
-import UserInput from './UserInput';
 import { EditUserValues } from '../App';
+import EditUserInput from './EditUserInput';
 
 interface UserListProps {
   prevName: string;
@@ -13,24 +13,17 @@ const UserList = ({ prevName, users, handleEditUser }: UserListProps) => {
   return (
     <StyledUserList>
       {users.map((user, i) => {
-        const { id, name, isEdit } = user;
+        const { id } = user;
         return (
           <StyledUser key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <StyledUserInfo>
-              <UserInput
+              <EditUserInput
                 id={id}
                 prevName={prevName}
                 buttonText="Edit"
                 handleEditUser={handleEditUser}
               />
-              {isEdit ? (
-                <span>
-                  Your name is now: {name}! id: {id}
-                </span>
-              ) : (
-                ''
-              )}
             </StyledUserInfo>
           </StyledUser>
         );
@@ -41,7 +34,7 @@ const UserList = ({ prevName, users, handleEditUser }: UserListProps) => {
 
 const StyledUserList = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-gap: 1rem;
 `;
 

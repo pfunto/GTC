@@ -1,25 +1,22 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 // import styled from 'styled-components';
-import { EditUserValues } from '../App';
 
-interface UserInputProps {
+interface AddUserInputProps {
   label?: string;
   id: number;
   prevName: string;
   buttonText: string;
-  handleAddUser?: (values: { name: string }) => void;
-  handleEditUser?: (id: number, values: EditUserValues) => void;
+  handleAddUser: (values: { name: string }) => void;
 }
 
-const UserInput = ({
+const AddUserInput = ({
   label,
   id,
   prevName,
   buttonText,
   handleAddUser,
-  handleEditUser,
-}: UserInputProps) => {
+}: AddUserInputProps) => {
   // formik
   const formik = useFormik({
     initialValues: {
@@ -31,12 +28,7 @@ const UserInput = ({
         .required('Required'),
     }),
     onSubmit: (values: { name: string }) => {
-      const { name } = values;
-
       handleAddUser && handleAddUser(values);
-
-      handleEditUser && handleEditUser(id, { name });
-
       // alert(JSON.stringify(values, null, 2));
     },
   });
@@ -57,4 +49,4 @@ const UserInput = ({
   );
 };
 
-export default UserInput;
+export default AddUserInput;

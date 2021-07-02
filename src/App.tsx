@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 // import styled from 'styled-components';
-import UserInput from './components/UserInput';
+import AddUserInput from './components/AddUserInput';
 import UserList from './components/UserList';
 import ItemInput from './components/ItemInput';
-import CurrencyInput from './components/CurrencyInput';
 
 export interface User {
   id: number;
   name: string;
-  isEdit: boolean;
+}
+
+export interface Item {
+  id: number;
+  name: string;
+  price: number;
+  owners: User[];
 }
 
 export interface EditUserValues {
@@ -20,6 +25,8 @@ const App = () => {
   const [prevName, setPrevName] = useState<string>('');
   const [id, setId] = useState<number>(-1);
 
+  // const [items, setItems] = useState<Item[]>([]);
+
   useEffect(() => {
     setId(id + 1);
     console.log('users', users);
@@ -29,7 +36,7 @@ const App = () => {
   function handleAddUser(values: { name: string }) {
     const { name } = values;
     setPrevName(name);
-    setUsers([...users, { id, name, isEdit: false }]);
+    setUsers([...users, { id, name }]);
   }
 
   function handleEditUser(id: number, values: EditUserValues) {
@@ -41,17 +48,14 @@ const App = () => {
 
     if (curObject) {
       curObject.name = name;
-      curObject.isEdit = true;
     }
-
-    setUsers([...newArr]);
 
     console.log('Edited name: ', curObject);
   }
 
   return (
     <div>
-      <UserInput
+      <AddUserInput
         label="Name"
         id={id}
         prevName={prevName}
