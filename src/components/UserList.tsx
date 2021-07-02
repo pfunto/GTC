@@ -40,8 +40,9 @@ const UserList = ({ prevName, users, handleEditUser }: UserListProps) => {
 };
 
 const StyledUserList = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
 `;
 
 const StyledUser = styled.div`

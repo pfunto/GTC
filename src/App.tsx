@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 // import styled from 'styled-components';
 import UserInput from './components/UserInput';
 import UserList from './components/UserList';
+import ItemInput from './components/ItemInput';
+import CurrencyInput from './components/CurrencyInput';
 
 export interface User {
   id: number;
@@ -62,6 +64,8 @@ const App = () => {
         users={users}
         handleEditUser={handleEditUser}
       />
+
+      <ItemInput />
     </div>
   );
 };
