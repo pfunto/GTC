@@ -7,6 +7,7 @@ import { EditUserValues } from '../App';
 interface EditUserInputProps {
   label?: string;
   id: number;
+  name: string;
   prevName: string;
   buttonText: string;
   handleEditUser: (id: number, values: EditUserValues) => void;
@@ -15,6 +16,7 @@ interface EditUserInputProps {
 const EditUserInput = ({
   label,
   id,
+  name,
   prevName,
   buttonText,
   handleEditUser,
@@ -37,7 +39,7 @@ const EditUserInput = ({
     }),
     onSubmit: (values: { name: string }) => {
       const { name } = values;
-      handleEditUser && handleEditUser(id, { name });
+      handleEditUser(id, { name });
 
       // alert(JSON.stringify(values, null, 2));
     },
@@ -45,14 +47,24 @@ const EditUserInput = ({
 
   return (
     <div>
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="name">{label}</label>
-        <input id="name" type="text" {...formik.getFieldProps('name')} />
+      {isEdit ? (
+        <form onSubmit={formik.handleSubmit}>
+          <label htmlFor="name">{label}</label>
+          <input id="name" type="text" {...formik.getFieldProps('name')} />
 
-        <button type="submit" onClick={handleEdit}>
-          {buttonText}
-        </button>
-      </form>
+          <button type="submit" onClick={handleEdit}>
+            {buttonText}
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={formik.handleSubmit}>
+          <label htmlFor="name">{label}</label>
+          {name}
+          <button type="submit" onClick={handleEdit}>
+            {buttonText}
+          </button>
+        </form>
+      )}
 
       {formik.touched.name && formik.errors.name ? (
         <div>{formik.errors.name}</div>

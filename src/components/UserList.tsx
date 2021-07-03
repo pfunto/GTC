@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { User } from '../App';
 import { EditUserValues } from '../App';
@@ -13,13 +14,14 @@ const UserList = ({ prevName, users, handleEditUser }: UserListProps) => {
   return (
     <StyledUserList>
       {users.map((user, i) => {
-        const { id } = user;
+        const { id, name } = user;
         return (
           <StyledUser key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <StyledUserInfo>
               <EditUserInput
                 id={id}
+                name={name}
                 prevName={prevName}
                 buttonText="Edit"
                 handleEditUser={handleEditUser}

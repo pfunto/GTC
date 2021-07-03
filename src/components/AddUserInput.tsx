@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 
 interface AddUserInputProps {
   label?: string;
-  id: number;
   prevName: string;
   buttonText: string;
   handleAddUser: (values: { name: string }) => void;
@@ -12,7 +11,6 @@ interface AddUserInputProps {
 
 const AddUserInput = ({
   label,
-  id,
   prevName,
   buttonText,
   handleAddUser,
@@ -28,7 +26,7 @@ const AddUserInput = ({
         .required('Required'),
     }),
     onSubmit: (values: { name: string }) => {
-      handleAddUser && handleAddUser(values);
+      handleAddUser(values);
       // alert(JSON.stringify(values, null, 2));
     },
   });

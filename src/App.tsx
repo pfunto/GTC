@@ -50,6 +50,10 @@ const App = () => {
       curObject.name = name;
     }
 
+    setUsers([...newArr]);
+
+    // spread operator mutates without setUser?
+
     console.log('Edited name: ', curObject);
   }
 
@@ -57,7 +61,6 @@ const App = () => {
     <div>
       <AddUserInput
         label="Name"
-        id={id}
         prevName={prevName}
         buttonText="Submit"
         handleAddUser={handleAddUser}
