@@ -1,26 +1,23 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-// import styled from 'styled-components';
-import { UserValues } from '../App';
+import { ItemValues } from '../App';
 
-interface EditUserInputProps {
-  label?: string;
-  uid: number;
+interface EditItemInputProps {
+  itemId: number;
   name: string;
-  prevName: string;
-  buttonText: string;
-  handleEditUser: (id: number, values: UserValues) => void;
+  price: string;
+  prevItem: string;
+  handleEditItem: (id: number, values: ItemValues) => void;
 }
 
-const EditUserInput = ({
-  label,
-  uid,
+const EditItemInput = ({
+  itemId,
   name,
-  prevName,
-  buttonText,
-  handleEditUser,
-}: EditUserInputProps) => {
+  price,
+  prevItem,
+  handleEditItem,
+}: EditItemInputProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   function handleEdit() {
@@ -30,18 +27,18 @@ const EditUserInput = ({
   // formik
   const formik = useFormik({
     initialValues: {
-      name: prevName,
+      name: prevItem,
+      price: '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
         .max(15, 'Must be 15 characters or less')
         .required('Required'),
+      price: Yup.string().required('Required'),
     }),
-    onSubmit: (values: UserValues) => {
-      const { name } = values;
-      handleEditUser(uid, { name });
-
-      // alert(JSON.stringify(values, null, 2));
+    onSubmit: (values: ItemValues) => {
+      const { name, price } = values;
+      handleEditItem(itemId, { name, price });
     },
   });
 
@@ -49,19 +46,18 @@ const EditUserInput = ({
     <div>
       {isEdit ? (
         <form onSubmit={formik.handleSubmit}>
-          <label htmlFor="name">{label}</label>
           <input id="name" type="text" {...formik.getFieldProps('name')} />
-
+          <input id="price" type="text" {...formik.getFieldProps('price')} />
           <button type="submit" onClick={handleEdit}>
-            {buttonText}
+            edit
           </button>
         </form>
       ) : (
         <form onSubmit={formik.handleSubmit}>
-          <label htmlFor="name">{label}</label>
           {name}
+          {price}
           <button type="submit" onClick={handleEdit}>
-            {buttonText}
+            edit
           </button>
         </form>
       )}
@@ -73,4 +69,4 @@ const EditUserInput = ({
   );
 };
 
-export default EditUserInput;
+export default EditItemInput;

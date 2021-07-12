@@ -1,12 +1,13 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 // import styled from 'styled-components';
+import { UserValues } from '../App';
 
 interface AddUserInputProps {
   label?: string;
   prevName: string;
   buttonText: string;
-  handleAddUser: (values: { name: string }) => void;
+  handleAddUser: (values: UserValues) => void;
 }
 
 const AddUserInput = ({
@@ -25,7 +26,7 @@ const AddUserInput = ({
         .max(15, 'Must be 15 characters or less')
         .required('Required'),
     }),
-    onSubmit: (values: { name: string }) => {
+    onSubmit: (values: UserValues) => {
       handleAddUser(values);
       // alert(JSON.stringify(values, null, 2));
     },

@@ -1,26 +1,25 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import { User } from '../App';
-import { EditUserValues } from '../App';
+import { UserValues } from '../App';
 import EditUserInput from './EditUserInput';
 
 interface UserListProps {
   prevName: string;
   users: User[];
-  handleEditUser: (id: number, values: EditUserValues) => void;
+  handleEditUser: (uid: number, values: UserValues) => void;
 }
 
 const UserList = ({ prevName, users, handleEditUser }: UserListProps) => {
   return (
     <StyledUserList>
       {users.map((user, i) => {
-        const { id, name } = user;
+        const { uid, name } = user;
         return (
           <StyledUser key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <StyledUserInfo>
               <EditUserInput
-                id={id}
+                uid={uid}
                 name={name}
                 prevName={prevName}
                 buttonText="Edit"

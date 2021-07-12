@@ -1,37 +1,45 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CurrencyInput from './CurrencyInput';
+import { ItemValues } from '../App';
 
-const ItemInput = () => {
+interface AddItemInputProps {
+  prevItem: string;
+  price: string;
+  handleAddItem: (values: ItemValues) => void;
+}
+
+const AddItemInput = ({
+  prevItem,
+  price,
+  handleAddItem,
+}: AddItemInputProps) => {
   // formik
   const formik = useFormik({
     initialValues: {
-      itemName: '',
-      price: '',
+      name: prevItem,
+      price: price,
     },
     validationSchema: Yup.object({
-      itemName: Yup.string()
+      name: Yup.string()
         .max(15, 'Must be 15 characters or less')
         .required('Required'),
       price: Yup.string().required('Required'),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values: ItemValues) => {
+      handleAddItem(values);
+      // alert(JSON.stringify(values, null, 2));
     },
   });
 
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="itemName">Item</label>
-        <input
-          id="itemName"
-          type="text"
-          {...formik.getFieldProps('itemName')}
-        />
+        <label htmlFor="name">Item</label>
+        <input id="name" type="text" {...formik.getFieldProps('name')} />
 
-        {formik.touched.itemName && formik.errors.itemName ? (
-          <div>{formik.errors.itemName}</div>
+        {formik.touched.name && formik.errors.name ? (
+          <div>{formik.errors.name}</div>
         ) : null}
 
         <label htmlFor="price">Price</label>
@@ -48,4 +56,4 @@ const ItemInput = () => {
   );
 };
 
-export default ItemInput;
+export default AddItemInput;
