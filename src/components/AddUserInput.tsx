@@ -4,22 +4,14 @@ import * as Yup from 'yup';
 import { UserValues } from '../App';
 
 interface AddUserInputProps {
-  label?: string;
-  prevName: string;
-  buttonText: string;
   handleAddUser: (values: UserValues) => void;
 }
 
-const AddUserInput = ({
-  label,
-  prevName,
-  buttonText,
-  handleAddUser,
-}: AddUserInputProps) => {
+const AddUserInput = ({ handleAddUser }: AddUserInputProps) => {
   // formik
   const formik = useFormik({
     initialValues: {
-      name: prevName,
+      name: '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -35,10 +27,10 @@ const AddUserInput = ({
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="name">{label}</label>
+        <label htmlFor="name">Name</label>
         <input id="name" type="text" {...formik.getFieldProps('name')} />
 
-        <button type="submit">{buttonText}</button>
+        <button type="submit">Submit</button>
       </form>
 
       {formik.touched.name && formik.errors.name ? (

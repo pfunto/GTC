@@ -4,27 +4,19 @@ import { UserValues } from '../App';
 import EditUserInput from './EditUserInput';
 
 interface UserListProps {
-  prevName: string;
   users: User[];
   handleEditUser: (uid: number, values: UserValues) => void;
 }
 
-const UserList = ({ prevName, users, handleEditUser }: UserListProps) => {
+const UserList = ({ users, handleEditUser }: UserListProps) => {
   return (
     <StyledUserList>
       {users.map((user, i) => {
-        const { uid, name } = user;
         return (
           <StyledUser key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <StyledUserInfo>
-              <EditUserInput
-                uid={uid}
-                name={name}
-                prevName={prevName}
-                buttonText="Edit"
-                handleEditUser={handleEditUser}
-              />
+              <EditUserInput user={user} handleEditUser={handleEditUser} />
             </StyledUserInfo>
           </StyledUser>
         );

@@ -2,25 +2,15 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 // import styled from 'styled-components';
-import { UserValues } from '../App';
+import { User, UserValues } from '../App';
 
 interface EditUserInputProps {
-  label?: string;
-  uid: number;
-  name: string;
-  prevName: string;
-  buttonText: string;
+  user: User;
   handleEditUser: (id: number, values: UserValues) => void;
 }
 
-const EditUserInput = ({
-  label,
-  uid,
-  name,
-  prevName,
-  buttonText,
-  handleEditUser,
-}: EditUserInputProps) => {
+const EditUserInput = ({ user, handleEditUser }: EditUserInputProps) => {
+  const { uid, name } = user;
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   function handleEdit() {
@@ -30,7 +20,7 @@ const EditUserInput = ({
   // formik
   const formik = useFormik({
     initialValues: {
-      name: prevName,
+      name: name,
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -49,19 +39,17 @@ const EditUserInput = ({
     <div>
       {isEdit ? (
         <form onSubmit={formik.handleSubmit}>
-          <label htmlFor="name">{label}</label>
           <input id="name" type="text" {...formik.getFieldProps('name')} />
 
           <button type="submit" onClick={handleEdit}>
-            {buttonText}
+            Edit
           </button>
         </form>
       ) : (
         <form onSubmit={formik.handleSubmit}>
-          <label htmlFor="name">{label}</label>
           {name}
           <button type="submit" onClick={handleEdit}>
-            {buttonText}
+            Edit
           </button>
         </form>
       )}

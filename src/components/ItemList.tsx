@@ -4,27 +4,19 @@ import { ItemValues } from '../App';
 import EditItemInput from './EditItemInput';
 
 interface ItemListProps {
-  prevItem: string;
   items: Item[];
   handleEditItem: (id: number, values: ItemValues) => void;
 }
 
-const ItemList = ({ prevItem, items, handleEditItem }: ItemListProps) => {
+const ItemList = ({ items, handleEditItem }: ItemListProps) => {
   return (
     <StyledItemList>
       {items.map((item, i) => {
-        const { itemId, name, price } = item;
         return (
           <StyledItem key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <StyledItemInfo>
-              <EditItemInput
-                itemId={itemId}
-                name={name}
-                price={price}
-                prevItem={prevItem}
-                handleEditItem={handleEditItem}
-              />
+              <EditItemInput item={item} handleEditItem={handleEditItem} />
             </StyledItemInfo>
           </StyledItem>
         );

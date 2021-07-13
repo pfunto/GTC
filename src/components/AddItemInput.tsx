@@ -4,21 +4,15 @@ import CurrencyInput from './CurrencyInput';
 import { ItemValues } from '../App';
 
 interface AddItemInputProps {
-  prevItem: string;
-  price: string;
   handleAddItem: (values: ItemValues) => void;
 }
 
-const AddItemInput = ({
-  prevItem,
-  price,
-  handleAddItem,
-}: AddItemInputProps) => {
+const AddItemInput = ({ handleAddItem }: AddItemInputProps) => {
   // formik
   const formik = useFormik({
     initialValues: {
-      name: prevItem,
-      price: price,
+      name: '',
+      price: '',
     },
     validationSchema: Yup.object({
       name: Yup.string()

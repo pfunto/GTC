@@ -1,23 +1,16 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ItemValues } from '../App';
+import { Item, ItemValues } from '../App';
+import CurrencyInput from './CurrencyInput';
 
 interface EditItemInputProps {
-  itemId: number;
-  name: string;
-  price: string;
-  prevItem: string;
+  item: Item;
   handleEditItem: (id: number, values: ItemValues) => void;
 }
 
-const EditItemInput = ({
-  itemId,
-  name,
-  price,
-  prevItem,
-  handleEditItem,
-}: EditItemInputProps) => {
+const EditItemInput = ({ item, handleEditItem }: EditItemInputProps) => {
+  const { itemId, name, price } = item;
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   function handleEdit() {
@@ -27,8 +20,8 @@ const EditItemInput = ({
   // formik
   const formik = useFormik({
     initialValues: {
-      name: prevItem,
-      price: '',
+      name: name,
+      price: price,
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -47,7 +40,10 @@ const EditItemInput = ({
       {isEdit ? (
         <form onSubmit={formik.handleSubmit}>
           <input id="name" type="text" {...formik.getFieldProps('name')} />
-          <input id="price" type="text" {...formik.getFieldProps('price')} />
+          <CurrencyInput
+            placeholder="$0.00"
+            {...formik.getFieldProps('price')}
+          />
           <button type="submit" onClick={handleEdit}>
             edit
           </button>

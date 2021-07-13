@@ -29,32 +29,27 @@ export interface ItemValues {
 const App = () => {
   // Users state
   const [users, setUsers] = useState<User[]>([]);
-  const [prevName, setPrevName] = useState<string>('');
-  const [uid, setUid] = useState<number>(-1);
+  const [uid, setUid] = useState<number>(0);
 
   // Items state
   const [items, setItems] = useState<Item[]>([]);
-  const [prevItem, setPrevItem] = useState<string>('');
-  const [itemId, setItemId] = useState<number>(-1);
-  const [price, setPrice] = useState<string>('');
+  const [itemId, setItemId] = useState<number>(0);
   // const [owners, setOwners] = useState<User[]>([]);
 
   useEffect(() => {
-    setUid(uid + 1);
     console.log('users', users);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
   useEffect(() => {
-    setItemId(itemId + 1);
     console.log('items', items);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   function handleAddUser(values: UserValues) {
     const { name } = values;
-    setPrevName(name);
     setUsers([...users, { uid, name }]);
+    setUid(uid + 1);
   }
 
   function handleEditUser(uid: number, values: UserValues) {
@@ -76,9 +71,8 @@ const App = () => {
 
   function handleAddItem(values: ItemValues) {
     const { name, price } = values;
-    setPrevItem(name);
-    setPrice(price);
     setItems([...items, { itemId, name, price }]);
+    setItemId(itemId + 1);
   }
 
   function handleEditItem(itemId: number, values: ItemValues) {
@@ -100,30 +94,13 @@ const App = () => {
 
   return (
     <div>
-      <AddUserInput
-        label="Name"
-        prevName={prevName}
-        buttonText="Submit"
-        handleAddUser={handleAddUser}
-      />
+      <AddUserInput handleAddUser={handleAddUser} />
 
-      <UserList
-        prevName={prevName}
-        users={users}
-        handleEditUser={handleEditUser}
-      />
+      <UserList users={users} handleEditUser={handleEditUser} />
 
-      <AddItemInput
-        prevItem={prevItem}
-        price={price}
-        handleAddItem={handleAddItem}
-      />
+      <AddItemInput handleAddItem={handleAddItem} />
 
-      <ItemList
-        prevItem={prevItem}
-        items={items}
-        handleEditItem={handleEditItem}
-      />
+      <ItemList items={items} handleEditItem={handleEditItem} />
     </div>
   );
 };
