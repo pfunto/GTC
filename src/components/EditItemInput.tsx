@@ -37,26 +37,24 @@ const EditItemInput = ({ item, handleEditItem }: EditItemInputProps) => {
 
   return (
     <div>
-      {isEdit ? (
-        <form onSubmit={formik.handleSubmit}>
-          <input id="name" type="text" {...formik.getFieldProps('name')} />
-          <CurrencyInput
-            placeholder="$0.00"
-            {...formik.getFieldProps('price')}
-          />
-          <button type="submit" onClick={handleEdit}>
-            edit
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={formik.handleSubmit}>
-          {name}
-          {price}
-          <button type="submit" onClick={handleEdit}>
-            edit
-          </button>
-        </form>
-      )}
+      <form onSubmit={formik.handleSubmit}>
+        {isEdit ? (
+          <>
+            <input id="name" type="text" {...formik.getFieldProps('name')} />
+            <CurrencyInput
+              placeholder="$0.00"
+              {...formik.getFieldProps('price')}
+            />
+          </>
+        ) : (
+          <span>
+            {name} / {price}
+          </span>
+        )}
+        <button type="submit" onClick={handleEdit}>
+          edit
+        </button>
+      </form>
 
       {formik.touched.name && formik.errors.name ? (
         <div>{formik.errors.name}</div>

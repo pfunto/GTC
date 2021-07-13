@@ -38,12 +38,10 @@ const App = () => {
 
   useEffect(() => {
     console.log('users', users);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
   useEffect(() => {
     console.log('items', items);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   function handleAddUser(values: UserValues) {

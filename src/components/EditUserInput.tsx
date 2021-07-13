@@ -37,22 +37,16 @@ const EditUserInput = ({ user, handleEditUser }: EditUserInputProps) => {
 
   return (
     <div>
-      {isEdit ? (
-        <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
+        {isEdit ? (
           <input id="name" type="text" {...formik.getFieldProps('name')} />
-
-          <button type="submit" onClick={handleEdit}>
-            Edit
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={formik.handleSubmit}>
-          {name}
-          <button type="submit" onClick={handleEdit}>
-            Edit
-          </button>
-        </form>
-      )}
+        ) : (
+          <span>{name}</span>
+        )}
+        <button type="submit" onClick={handleEdit}>
+          Edit
+        </button>
+      </form>
 
       {formik.touched.name && formik.errors.name ? (
         <div>{formik.errors.name}</div>
