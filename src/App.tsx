@@ -27,9 +27,17 @@ export interface ItemValues {
 }
 
 const App = () => {
+  const localUsers = JSON.parse(localStorage.getItem('userObject') || '[]');
+  let lastUserId;
+  if (localUsers === null || localUsers.length === 0) {
+    lastUserId = 0;
+  } else {
+    lastUserId = localUsers[localUsers.length - 1].uid + 1;
+  }
+
   // Users state
-  const [users, setUsers] = useState<User[]>([]);
-  const [uid, setUid] = useState<number>(0);
+  const [users, setUsers] = useState<User[]>(localUsers);
+  const [uid, setUid] = useState<number>(lastUserId);
 
   // Items state
   const [items, setItems] = useState<Item[]>([]);
@@ -38,16 +46,20 @@ const App = () => {
 
   useEffect(() => {
     console.log('users', users);
+    localStorage.setItem('userObject', JSON.stringify(users));
   }, [users]);
 
   useEffect(() => {
     console.log('items', items);
   }, [items]);
 
+  // User functions
+
   function handleAddUser(values: UserValues) {
     const { name } = values;
     setUsers([...users, { uid, name }]);
     setUid(uid + 1);
+    // localStorage.removeItem('userObject');
   }
 
   function handleEditUser(uid: number, values: UserValues) {
@@ -66,6 +78,8 @@ const App = () => {
 
     console.log('Edited name: ', curObject);
   }
+
+  // Item functions
 
   function handleAddItem(values: ItemValues) {
     const { name, price } = values;

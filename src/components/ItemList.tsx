@@ -27,7 +27,10 @@ const ItemList = ({ items, handleEditItem }: ItemListProps) => {
 
 const StyledItemList = styled.div``;
 
-const StyledItem = styled.div``;
+const StyledItem = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const StyledItemInfo = styled.div``;
 
