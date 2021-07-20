@@ -59,7 +59,6 @@ const App = () => {
     const { name } = values;
     setUsers([...users, { uid, name }]);
     setUid(uid + 1);
-    // localStorage.removeItem('userObject');
   }
 
   function handleEditUser(uid: number, values: UserValues) {
@@ -77,6 +76,12 @@ const App = () => {
     setUsers([...newArr]);
 
     console.log('Edited name: ', curObject);
+  }
+
+  function handleRemoveUser(uid: number) {
+    const newArr = [...users];
+    const filteredUser = newArr.filter((user) => user.uid !== uid);
+    setUsers([...filteredUser]);
   }
 
   // Item functions
@@ -108,7 +113,11 @@ const App = () => {
     <div>
       <AddUserInput handleAddUser={handleAddUser} />
 
-      <UserList users={users} handleEditUser={handleEditUser} />
+      <UserList
+        users={users}
+        handleEditUser={handleEditUser}
+        handleRemoveUser={handleRemoveUser}
+      />
 
       <AddItemInput handleAddItem={handleAddItem} />
 

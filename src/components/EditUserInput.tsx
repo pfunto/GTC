@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { User, UserValues } from '../App';
@@ -6,9 +7,14 @@ import { User, UserValues } from '../App';
 interface EditUserInputProps {
   user: User;
   handleEditUser: (id: number, values: UserValues) => void;
+  handleRemoveUser: (id: number) => void;
 }
 
-const EditUserInput = ({ user, handleEditUser }: EditUserInputProps) => {
+const EditUserInput = ({
+  user,
+  handleEditUser,
+  handleRemoveUser,
+}: EditUserInputProps) => {
   const { uid, name } = user;
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
@@ -35,7 +41,7 @@ const EditUserInput = ({ user, handleEditUser }: EditUserInputProps) => {
   });
 
   return (
-    <div>
+    <StyledUserInputContainer>
       <form onSubmit={formik.handleSubmit}>
         {isEdit ? (
           <input id="name" type="text" {...formik.getFieldProps('name')} />
@@ -47,11 +53,17 @@ const EditUserInput = ({ user, handleEditUser }: EditUserInputProps) => {
         </button>
       </form>
 
+      <button onClick={() => handleRemoveUser(uid)}>X</button>
+
       {formik.touched.name && formik.errors.name ? (
         <div>{formik.errors.name}</div>
       ) : null}
-    </div>
+    </StyledUserInputContainer>
   );
 };
+
+const StyledUserInputContainer = styled.div`
+  display: flex;
+`;
 
 export default EditUserInput;

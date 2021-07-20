@@ -6,9 +6,14 @@ import EditUserInput from './EditUserInput';
 interface UserListProps {
   users: User[];
   handleEditUser: (uid: number, values: UserValues) => void;
+  handleRemoveUser: (uid: number) => void;
 }
 
-const UserList = ({ users, handleEditUser }: UserListProps) => {
+const UserList = ({
+  users,
+  handleEditUser,
+  handleRemoveUser,
+}: UserListProps) => {
   return (
     <StyledUserList>
       {users.map((user, i) => {
@@ -16,7 +21,11 @@ const UserList = ({ users, handleEditUser }: UserListProps) => {
           <StyledUser key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <StyledUserInfo>
-              <EditUserInput user={user} handleEditUser={handleEditUser} />
+              <EditUserInput
+                user={user}
+                handleEditUser={handleEditUser}
+                handleRemoveUser={handleRemoveUser}
+              />
             </StyledUserInfo>
           </StyledUser>
         );
