@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Item, ItemValues } from '../App';
@@ -7,9 +8,14 @@ import CurrencyInput from './CurrencyInput';
 interface EditItemInputProps {
   item: Item;
   handleEditItem: (id: number, values: ItemValues) => void;
+  handleRemoveItem: (id: number) => void;
 }
 
-const EditItemInput = ({ item, handleEditItem }: EditItemInputProps) => {
+const EditItemInput = ({
+  item,
+  handleEditItem,
+  handleRemoveItem,
+}: EditItemInputProps) => {
   const { itemId, name, price } = item;
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
@@ -36,7 +42,7 @@ const EditItemInput = ({ item, handleEditItem }: EditItemInputProps) => {
   });
 
   return (
-    <div>
+    <StyledItemInputContainer>
       <form onSubmit={formik.handleSubmit}>
         {isEdit ? (
           <>
@@ -56,11 +62,17 @@ const EditItemInput = ({ item, handleEditItem }: EditItemInputProps) => {
         </button>
       </form>
 
+      <button onClick={() => handleRemoveItem(itemId)}>X</button>
+
       {formik.touched.name && formik.errors.name ? (
         <div>{formik.errors.name}</div>
       ) : null}
-    </div>
+    </StyledItemInputContainer>
   );
 };
+
+const StyledItemInputContainer = styled.div`
+  display: flex;
+`;
 
 export default EditItemInput;

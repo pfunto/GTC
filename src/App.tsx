@@ -35,13 +35,21 @@ const App = () => {
     lastUserId = localUsers[localUsers.length - 1].uid + 1;
   }
 
+  const localItems = JSON.parse(localStorage.getItem('itemObject') || '[]');
+  let lastItemId;
+  if (localItems === null || localItems.length === 0) {
+    lastItemId = 0;
+  } else {
+    lastItemId = localItems[localItems.length - 1].itemId + 1;
+  }
+
   // Users state
   const [users, setUsers] = useState<User[]>(localUsers);
   const [uid, setUid] = useState<number>(lastUserId);
 
   // Items state
-  const [items, setItems] = useState<Item[]>([]);
-  const [itemId, setItemId] = useState<number>(0);
+  const [items, setItems] = useState<Item[]>(localItems);
+  const [itemId, setItemId] = useState<number>(lastItemId);
   // const [owners, setOwners] = useState<User[]>([]);
 
   useEffect(() => {
@@ -51,6 +59,7 @@ const App = () => {
 
   useEffect(() => {
     console.log('items', items);
+    localStorage.setItem('itemObject', JSON.stringify(items));
   }, [items]);
 
   // User functions
@@ -109,6 +118,12 @@ const App = () => {
     console.log('Edited item: ', curObject);
   }
 
+  function handleRemoveItem(itemId: number) {
+    const newArr = [...items];
+    const filteredItems = newArr.filter((item) => item.itemId !== itemId);
+    setItems([...filteredItems]);
+  }
+
   return (
     <div>
       <AddUserInput handleAddUser={handleAddUser} />
@@ -121,7 +136,11 @@ const App = () => {
 
       <AddItemInput handleAddItem={handleAddItem} />
 
-      <ItemList items={items} handleEditItem={handleEditItem} />
+      <ItemList
+        items={items}
+        handleEditItem={handleEditItem}
+        handleRemoveItem={handleRemoveItem}
+      />
     </div>
   );
 };

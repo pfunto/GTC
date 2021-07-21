@@ -6,9 +6,14 @@ import EditItemInput from './EditItemInput';
 interface ItemListProps {
   items: Item[];
   handleEditItem: (id: number, values: ItemValues) => void;
+  handleRemoveItem: (id: number) => void;
 }
 
-const ItemList = ({ items, handleEditItem }: ItemListProps) => {
+const ItemList = ({
+  items,
+  handleEditItem,
+  handleRemoveItem,
+}: ItemListProps) => {
   return (
     <StyledItemList>
       {items.map((item, i) => {
@@ -16,7 +21,11 @@ const ItemList = ({ items, handleEditItem }: ItemListProps) => {
           <StyledItem key={i}>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
             <StyledItemInfo>
-              <EditItemInput item={item} handleEditItem={handleEditItem} />
+              <EditItemInput
+                item={item}
+                handleEditItem={handleEditItem}
+                handleRemoveItem={handleRemoveItem}
+              />
             </StyledItemInfo>
           </StyledItem>
         );
