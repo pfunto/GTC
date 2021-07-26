@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import AddUserInput from './components/AddUserInput';
 import UserList from './components/UserList';
 import AddItemInput from './components/AddItemInput';
@@ -51,6 +51,7 @@ const App = () => {
   const [items, setItems] = useState<Item[]>(localItems);
   const [itemId, setItemId] = useState<number>(lastItemId);
   // const [owners, setOwners] = useState<User[]>([]);
+  const [isAddOwner, setIsAddOwner] = useState<boolean>(false);
 
   useEffect(() => {
     console.log('users', users);
@@ -62,8 +63,11 @@ const App = () => {
     localStorage.setItem('itemObject', JSON.stringify(items));
   }, [items]);
 
-  // User functions
+  useEffect(() => {
+    console.log('isAddOwner', isAddOwner);
+  }, [isAddOwner]);
 
+  // User functions
   function handleAddUser(values: UserValues) {
     const { name } = values;
     setUsers([...users, { uid, name }]);
@@ -94,7 +98,6 @@ const App = () => {
   }
 
   // Item functions
-
   function handleAddItem(values: ItemValues) {
     const { name, price } = values;
     setItems([...items, { itemId, name, price }]);
@@ -124,8 +127,16 @@ const App = () => {
     setItems([...filteredItems]);
   }
 
+  function handleClearItem() {
+    setItems([]);
+  }
+
+  function handleOwners() {
+    setIsAddOwner(!isAddOwner);
+  }
+
   return (
-    <div>
+    <StyledAppContainer>
       <AddUserInput handleAddUser={handleAddUser} />
 
       <UserList
@@ -134,15 +145,35 @@ const App = () => {
         handleRemoveUser={handleRemoveUser}
       />
 
-      <AddItemInput handleAddItem={handleAddItem} />
+      <AddItemInput
+        handleAddItem={handleAddItem}
+        handleClearItem={handleClearItem}
+      />
 
       <ItemList
         items={items}
         handleEditItem={handleEditItem}
         handleRemoveItem={handleRemoveItem}
       />
-    </div>
+
+      <button onClick={() => handleOwners()}>Toggle Owners List</button>
+
+      {isAddOwner ? <StyledOwnerContainer>hello</StyledOwnerContainer> : ''}
+    </StyledAppContainer>
   );
 };
+
+const StyledAppContainer = styled.div`
+  position: relative;
+  margin: 1rem;
+`;
+
+const StyledOwnerContainer = styled.div`
+  width: 100%;
+  height: 95%;
+  position: absolute;
+  top: 0;
+  background: rgba(255, 255, 255, 0.8);
+`;
 
 export default App;

@@ -1,13 +1,18 @@
 import { useFormik } from 'formik';
+import styled from 'styled-components';
 import * as Yup from 'yup';
 import CurrencyInput from './CurrencyInput';
 import { ItemValues } from '../App';
 
 interface AddItemInputProps {
   handleAddItem: (values: ItemValues) => void;
+  handleClearItem: () => void;
 }
 
-const AddItemInput = ({ handleAddItem }: AddItemInputProps) => {
+const AddItemInput = ({
+  handleAddItem,
+  handleClearItem,
+}: AddItemInputProps) => {
   // formik
   const formik = useFormik({
     initialValues: {
@@ -27,7 +32,7 @@ const AddItemInput = ({ handleAddItem }: AddItemInputProps) => {
   });
 
   return (
-    <div>
+    <StyledAddItemInputContainer>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="name">Item</label>
         <input id="name" type="text" {...formik.getFieldProps('name')} />
@@ -46,8 +51,14 @@ const AddItemInput = ({ handleAddItem }: AddItemInputProps) => {
 
         <button type="submit">Submit</button>
       </form>
-    </div>
+
+      <button onClick={() => handleClearItem()}>Clear All</button>
+    </StyledAddItemInputContainer>
   );
 };
+
+const StyledAddItemInputContainer = styled.div`
+  display: flex;
+`;
 
 export default AddItemInput;
