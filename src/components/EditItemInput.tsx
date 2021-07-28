@@ -18,6 +18,7 @@ const EditItemInput = ({
 }: EditItemInputProps) => {
   const { itemId, name, price } = item;
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isAbleToEdit, setIsAbleToEdit] = useState<boolean>(false);
 
   function handleEdit() {
     setIsEdit(!isEdit);
@@ -46,6 +47,7 @@ const EditItemInput = ({
       <form onSubmit={formik.handleSubmit}>
         {isEdit ? (
           <>
+            <img src="https://via.placeholder.com/50" alt="placeholder" />
             <input id="name" type="text" {...formik.getFieldProps('name')} />
             <CurrencyInput
               placeholder="$0.00"
@@ -53,16 +55,41 @@ const EditItemInput = ({
             />
           </>
         ) : (
-          <span>
-            {name} / {price}
-          </span>
+          <div className="item__info">
+            <img src="https://via.placeholder.com/50" alt="placeholder" />
+            <span>
+              {name} / {price}
+            </span>
+          </div>
         )}
-        <button type="submit" onClick={handleEdit}>
-          edit
-        </button>
+        {isAbleToEdit ? (
+          <div className="item__buttons">
+            <button type="submit" onClick={handleEdit}>
+              edit
+            </button>
+            <button
+              className="item__buttons-clear"
+              type="button"
+              onClick={() => handleRemoveItem(itemId)}
+            >
+              X
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setIsAbleToEdit(!isAbleToEdit);
+                setIsEdit(false);
+              }}
+            >
+              ?
+            </button>
+          </div>
+        ) : (
+          <button type="button" onClick={() => setIsAbleToEdit(!isAbleToEdit)}>
+            ?
+          </button>
+        )}
       </form>
-
-      <button onClick={() => handleRemoveItem(itemId)}>X</button>
 
       {formik.touched.name && formik.errors.name ? (
         <div>{formik.errors.name}</div>
@@ -72,7 +99,25 @@ const EditItemInput = ({
 };
 
 const StyledItemInputContainer = styled.div`
-  display: flex;
+  .item__info {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-left: 1rem;
+    }
+  }
+
+  .item__buttons-clear {
+    margin: 0 0.2rem;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 500px;
+  }
 `;
 
 export default EditItemInput;

@@ -4,6 +4,7 @@ import AddUserInput from './components/AddUserInput';
 import UserList from './components/UserList';
 import AddItemInput from './components/AddItemInput';
 import ItemList from './components/ItemList';
+import OwnerList from './components/OwnerList';
 
 export interface User {
   uid: number;
@@ -158,7 +159,13 @@ const App = () => {
 
       <button onClick={() => handleOwners()}>Toggle Owners List</button>
 
-      {isAddOwner ? <StyledOwnerContainer>hello</StyledOwnerContainer> : ''}
+      {isAddOwner ? (
+        <StyledOwnerContainer>
+          <OwnerList users={users} />
+        </StyledOwnerContainer>
+      ) : (
+        ''
+      )}
     </StyledAppContainer>
   );
 };
@@ -173,7 +180,7 @@ const StyledOwnerContainer = styled.div`
   height: 95%;
   position: absolute;
   top: 0;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
 `;
 
 export default App;

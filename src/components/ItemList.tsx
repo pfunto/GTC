@@ -18,29 +18,22 @@ const ItemList = ({
     <StyledItemList>
       {items.map((item, i) => {
         return (
-          <StyledItem key={i}>
-            <img src="https://via.placeholder.com/50" alt="placeholder" />
-            <StyledItemInfo>
-              <EditItemInput
-                item={item}
-                handleEditItem={handleEditItem}
-                handleRemoveItem={handleRemoveItem}
-              />
-            </StyledItemInfo>
-          </StyledItem>
+          <EditItemInput
+            key={i}
+            item={item}
+            handleEditItem={handleEditItem}
+            handleRemoveItem={handleRemoveItem}
+          />
         );
       })}
     </StyledItemList>
   );
 };
 
-const StyledItemList = styled.div``;
-
-const StyledItem = styled.div`
-  display: flex;
-  align-items: center;
+const StyledItemList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 `;
-
-const StyledItemInfo = styled.div``;
 
 export default ItemList;
