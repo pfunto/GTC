@@ -15,7 +15,7 @@ export interface Item {
   itemId: number;
   name: string;
   price: string;
-  // owners: User[];
+  owners?: User[];
 }
 
 export interface UserValues {
@@ -173,6 +173,19 @@ const App = () => {
 const StyledAppContainer = styled.div`
   position: relative;
   margin: 1rem;
+
+  button {
+    margin-left: 0.2rem;
+  }
+  form {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .form-error {
+    font-size: 0.8rem;
+    color: red;
+  }
 `;
 
 const StyledOwnerContainer = styled.div`

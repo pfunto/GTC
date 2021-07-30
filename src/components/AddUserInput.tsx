@@ -28,14 +28,15 @@ const AddUserInput = ({ handleAddUser }: AddUserInputProps) => {
     <div>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="name">Name</label>
-        <input id="name" type="text" {...formik.getFieldProps('name')} />
+        <div className="form-error">
+          <input id="name" type="text" {...formik.getFieldProps('name')} />
+          {formik.touched.name && formik.errors.name ? (
+            <div>{formik.errors.name}</div>
+          ) : null}
+        </div>
 
         <button type="submit">Submit</button>
       </form>
-
-      {formik.touched.name && formik.errors.name ? (
-        <div>{formik.errors.name}</div>
-      ) : null}
     </div>
   );
 };

@@ -35,19 +35,26 @@ const AddItemInput = ({
     <StyledAddItemInputContainer>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="name">Item</label>
-        <input id="name" type="text" {...formik.getFieldProps('name')} />
+        <div className="form-error">
+          <input id="name" type="text" {...formik.getFieldProps('name')} />
 
-        {formik.touched.name && formik.errors.name ? (
-          <div>{formik.errors.name}</div>
-        ) : null}
+          {formik.touched.name && formik.errors.name ? (
+            <div>{formik.errors.name}</div>
+          ) : null}
+        </div>
 
         <label htmlFor="price">Price</label>
-        {/* <input id="price" type="number" {...formik.getFieldProps('price')} /> */}
-        <CurrencyInput placeholder="$0.00" {...formik.getFieldProps('price')} />
+        <div className="form-error">
+          {/* <input id="price" type="number" {...formik.getFieldProps('price')} /> */}
+          <CurrencyInput
+            placeholder="$0.00"
+            {...formik.getFieldProps('price')}
+          />
 
-        {formik.touched.price && formik.errors.price ? (
-          <div>{formik.errors.price}</div>
-        ) : null}
+          {formik.touched.price && formik.errors.price ? (
+            <div>{formik.errors.price}</div>
+          ) : null}
+        </div>
 
         <button type="submit">Submit</button>
       </form>
@@ -59,6 +66,7 @@ const AddItemInput = ({
 
 const StyledAddItemInputContainer = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 export default AddItemInput;
