@@ -177,7 +177,7 @@ const StyledAppContainer = styled.div`
   button {
     margin-left: 0.2rem;
   }
-  form {
+  .form-addedit {
     display: flex;
     align-items: flex-start;
   }

@@ -48,11 +48,22 @@ const EditItemInput = ({
         {isEdit ? (
           <>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
-            <input id="name" type="text" {...formik.getFieldProps('name')} />
-            <CurrencyInput
-              placeholder="$0.00"
-              {...formik.getFieldProps('price')}
-            />
+            <div>
+              <input id="name" type="text" {...formik.getFieldProps('name')} />
+              {formik.touched.name && formik.errors.name ? (
+                <div className="form-error">{formik.errors.name}</div>
+              ) : null}
+            </div>
+
+            <div>
+              <CurrencyInput
+                placeholder="$0.00"
+                {...formik.getFieldProps('price')}
+              />
+              {formik.touched.price && formik.errors.price ? (
+                <div className="form-error">{formik.errors.price}</div>
+              ) : null}
+            </div>
           </>
         ) : (
           <div className="item__info">
@@ -90,10 +101,6 @@ const EditItemInput = ({
           </button>
         )}
       </form>
-
-      {formik.touched.name && formik.errors.name ? (
-        <div>{formik.errors.name}</div>
-      ) : null}
     </StyledItemInputContainer>
   );
 };

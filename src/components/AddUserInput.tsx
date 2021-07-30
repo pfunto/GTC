@@ -26,12 +26,12 @@ const AddUserInput = ({ handleAddUser }: AddUserInputProps) => {
 
   return (
     <div>
-      <form onSubmit={formik.handleSubmit}>
+      <form className="form-addedit" onSubmit={formik.handleSubmit}>
         <label htmlFor="name">Name</label>
-        <div className="form-error">
+        <div>
           <input id="name" type="text" {...formik.getFieldProps('name')} />
           {formik.touched.name && formik.errors.name ? (
-            <div>{formik.errors.name}</div>
+            <div className="form-error">{formik.errors.name}</div>
           ) : null}
         </div>
 

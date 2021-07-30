@@ -33,7 +33,7 @@ const AddItemInput = ({
 
   return (
     <StyledAddItemInputContainer>
-      <form onSubmit={formik.handleSubmit}>
+      <form className="form-addedit" onSubmit={formik.handleSubmit}>
         <label htmlFor="name">Item</label>
         <div className="form-error">
           <input id="name" type="text" {...formik.getFieldProps('name')} />
@@ -57,9 +57,10 @@ const AddItemInput = ({
         </div>
 
         <button type="submit">Submit</button>
+        <button type="button" onClick={() => handleClearItem()}>
+          Clear All
+        </button>
       </form>
-
-      <button onClick={() => handleClearItem()}>Clear All</button>
     </StyledAddItemInputContainer>
   );
 };

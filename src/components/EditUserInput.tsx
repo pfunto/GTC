@@ -42,22 +42,24 @@ const EditUserInput = ({
 
   return (
     <StyledUserInputContainer>
-      <form onSubmit={formik.handleSubmit}>
+      <form className="form-addedit" onSubmit={formik.handleSubmit}>
         {isEdit ? (
-          <input id="name" type="text" {...formik.getFieldProps('name')} />
+          <div>
+            <input id="name" type="text" {...formik.getFieldProps('name')} />
+            {formik.touched.name && formik.errors.name ? (
+              <div className="form-error">{formik.errors.name}</div>
+            ) : null}
+          </div>
         ) : (
           <span>{name}</span>
         )}
         <button type="submit" onClick={handleEdit}>
           Edit
         </button>
+        <button type="button" onClick={() => handleRemoveUser(uid)}>
+          X
+        </button>
       </form>
-
-      <button onClick={() => handleRemoveUser(uid)}>X</button>
-
-      {formik.touched.name && formik.errors.name ? (
-        <div>{formik.errors.name}</div>
-      ) : null}
     </StyledUserInputContainer>
   );
 };
