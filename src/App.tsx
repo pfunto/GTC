@@ -73,6 +73,10 @@ const App = () => {
     console.log('isAddOwner', isAddOwner);
   }, [isAddOwner]);
 
+  useEffect(() => {
+    console.log('owners', owners);
+  }, [owners]);
+
   // User functions
   function handleAddUser(values: UserValues) {
     const { name } = values;
@@ -137,12 +141,14 @@ const App = () => {
     setItems([]);
   }
 
+  // Owner Functions
+
   function handleAddOwners() {
     setIsAddOwner(!isAddOwner);
   }
 
-  function handleUpdateOwners(user: User) {
-    setOwners([...owners, user]);
+  function handleUpdateOwners(users: User[]) {
+    setOwners(users);
   }
 
   return (
