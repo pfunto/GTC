@@ -4,27 +4,39 @@ import OwnerButton from './OwnerButton';
 
 interface OwnerListProps {
   users: User[];
-  handleUpdateOwners: (users: User[]) => void;
+  handleAddOwner: (user: User) => void;
+  handleRemoveOwner: (user: User) => void;
 }
 
-const OwnerList = ({ users, handleUpdateOwners }: OwnerListProps) => {
+const OwnerList = ({
+  users,
+  handleAddOwner,
+  handleRemoveOwner,
+}: OwnerListProps) => {
   return (
-    <StyledOwnerList>
-      <StyledOwnerListContainer>
+    <StyledOwnerListContainer>
+      <StyledOwnerList>
         {users.map((user, i) => {
-          return <OwnerButton user={user} key={i} />;
+          return (
+            <OwnerButton
+              user={user}
+              key={i}
+              handleAddOwner={handleAddOwner}
+              handleRemoveOwner={handleRemoveOwner}
+            />
+          );
         })}
-      </StyledOwnerListContainer>
+      </StyledOwnerList>
       <button type="submit">Submit</button>
-    </StyledOwnerList>
+    </StyledOwnerListContainer>
   );
 };
 
-const StyledOwnerList = styled.div``;
+const StyledOwnerListContainer = styled.div``;
 
-const StyledOwnerListContainer = styled.div`
+const StyledOwnerList = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 `;
 

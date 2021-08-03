@@ -57,7 +57,7 @@ const App = () => {
   const [items, setItems] = useState<Item[]>(localItems);
   const [itemId, setItemId] = useState<number>(lastItemId);
   const [owners, setOwners] = useState<User[]>([]);
-  const [isAddOwner, setIsAddOwner] = useState<boolean>(false);
+  const [isToggleOwners, setIsToggleOwners] = useState<boolean>(false);
 
   useEffect(() => {
     console.log('users', users);
@@ -70,8 +70,8 @@ const App = () => {
   }, [items]);
 
   useEffect(() => {
-    console.log('isAddOwner', isAddOwner);
-  }, [isAddOwner]);
+    console.log('isToggleOwners', isToggleOwners);
+  }, [isToggleOwners]);
 
   useEffect(() => {
     console.log('owners', owners);
@@ -141,14 +141,23 @@ const App = () => {
     setItems([]);
   }
 
+  // function handleItemOwners(itemId: number) {}
+
   // Owner Functions
 
-  function handleAddOwners() {
-    setIsAddOwner(!isAddOwner);
+  function handleToggleOwners() {
+    setIsToggleOwners(!isToggleOwners);
   }
 
-  function handleUpdateOwners(users: User[]) {
-    setOwners(users);
+  function handleAddOwner(user: User) {
+    setOwners([...owners, user]);
+  }
+
+  function handleRemoveOwner(user: User) {
+    const { uid } = user;
+    const newArr = [...owners];
+    const filteredOwners = newArr.filter((owner) => owner.uid !== uid);
+    setOwners([...filteredOwners]);
   }
 
   return (
@@ -172,11 +181,15 @@ const App = () => {
         handleRemoveItem={handleRemoveItem}
       />
 
-      <button onClick={() => handleAddOwners()}>Toggle Owners List</button>
+      <button onClick={() => handleToggleOwners()}>Toggle Owners List</button>
 
-      {isAddOwner ? (
+      {isToggleOwners ? (
         <StyledOwnerContainer>
-          <OwnerList users={users} handleUpdateOwners={handleUpdateOwners} />
+          <OwnerList
+            users={users}
+            handleAddOwner={handleAddOwner}
+            handleRemoveOwner={handleRemoveOwner}
+          />
         </StyledOwnerContainer>
       ) : (
         ''

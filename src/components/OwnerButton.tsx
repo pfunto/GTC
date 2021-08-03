@@ -1,27 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { User } from '../App';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface OwnerButtonProps {
   user: User;
+  handleAddOwner: (user: User) => void;
+  handleRemoveOwner: (user: User) => void;
 }
 
-const OwnerButton = ({ user }: OwnerButtonProps) => {
+const OwnerButton = ({
+  user,
+  handleAddOwner,
+  handleRemoveOwner,
+}: OwnerButtonProps) => {
   const { name } = user;
   const [isValidOwner, setIsValidOwner] = useState<boolean>(false);
+
   return (
-    <StyledOwnerButton onClick={() => setIsValidOwner(!isValidOwner)}>
-      <span>{name}</span>
+    <StyledOwnerButtonContainer>
       {isValidOwner ? (
-        <FontAwesomeIcon icon={['far', 'check-square']} />
+        <StyledOwnerButton
+          onClick={() => {
+            setIsValidOwner(!isValidOwner);
+            handleRemoveOwner(user);
+          }}
+        >
+          <span>{name}</span>
+          <FontAwesomeIcon icon={['far', 'check-square']} />
+        </StyledOwnerButton>
       ) : (
-        <FontAwesomeIcon icon={['far', 'square']} />
+        <StyledOwnerButton
+          onClick={() => {
+            setIsValidOwner(!isValidOwner);
+            handleAddOwner(user);
+          }}
+        >
+          <span>{name}</span>
+          <FontAwesomeIcon icon={['far', 'square']} />
+        </StyledOwnerButton>
       )}
-    </StyledOwnerButton>
+    </StyledOwnerButtonContainer>
   );
 };
 
-const StyledOwnerButton = styled.button``;
+const StyledOwnerButtonContainer = styled.div``;
+
+const StyledOwnerButton = styled.button`
+  width: 100%;
+`;
 
 export default OwnerButton;
