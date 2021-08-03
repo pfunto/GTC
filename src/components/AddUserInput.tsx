@@ -35,7 +35,9 @@ const AddUserInput = ({ handleAddUser }: AddUserInputProps) => {
           ) : null}
         </div>
 
-        <button type="submit">Submit</button>
+        <button className="form-button" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );

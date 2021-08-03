@@ -5,6 +5,11 @@ import UserList from './components/UserList';
 import AddItemInput from './components/AddItemInput';
 import ItemList from './components/ItemList';
 import OwnerList from './components/OwnerList';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { faSquare, faCheck } from '@fortawesome/free-solid-svg-icons';
+
+library.add(far, faSquare, faCheck);
 
 export interface User {
   uid: number;
@@ -51,7 +56,7 @@ const App = () => {
   // Items state
   const [items, setItems] = useState<Item[]>(localItems);
   const [itemId, setItemId] = useState<number>(lastItemId);
-  // const [owners, setOwners] = useState<User[]>([]);
+  const [owners, setOwners] = useState<User[]>([]);
   const [isAddOwner, setIsAddOwner] = useState<boolean>(false);
 
   useEffect(() => {
@@ -132,8 +137,12 @@ const App = () => {
     setItems([]);
   }
 
-  function handleOwners() {
+  function handleAddOwners() {
     setIsAddOwner(!isAddOwner);
+  }
+
+  function handleUpdateOwners(user: User) {
+    setOwners([...owners, user]);
   }
 
   return (
@@ -157,11 +166,11 @@ const App = () => {
         handleRemoveItem={handleRemoveItem}
       />
 
-      <button onClick={() => handleOwners()}>Toggle Owners List</button>
+      <button onClick={() => handleAddOwners()}>Toggle Owners List</button>
 
       {isAddOwner ? (
         <StyledOwnerContainer>
-          <OwnerList users={users} />
+          <OwnerList users={users} handleUpdateOwners={handleUpdateOwners} />
         </StyledOwnerContainer>
       ) : (
         ''
@@ -174,7 +183,7 @@ const StyledAppContainer = styled.div`
   position: relative;
   margin: 1rem;
 
-  button {
+  .form-button {
     margin-left: 0.2rem;
   }
   .form-addedit {

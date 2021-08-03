@@ -75,17 +75,18 @@ const EditItemInput = ({
         )}
         {isAbleToEdit ? (
           <div className="item__buttons">
-            <button type="submit" onClick={handleEdit}>
+            <button className="form-button" type="submit" onClick={handleEdit}>
               edit
             </button>
             <button
-              className="item__buttons-clear"
+              className="form-button item__buttons-clear"
               type="button"
               onClick={() => handleRemoveItem(itemId)}
             >
               X
             </button>
             <button
+              className="form-button"
               type="button"
               onClick={() => {
                 setIsAbleToEdit(!isAbleToEdit);
@@ -96,7 +97,11 @@ const EditItemInput = ({
             </button>
           </div>
         ) : (
-          <button type="button" onClick={() => setIsAbleToEdit(!isAbleToEdit)}>
+          <button
+            className="form-button"
+            type="button"
+            onClick={() => setIsAbleToEdit(!isAbleToEdit)}
+          >
             ?
           </button>
         )}

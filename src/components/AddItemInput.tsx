@@ -56,8 +56,14 @@ const AddItemInput = ({
           ) : null}
         </div>
 
-        <button type="submit">Submit</button>
-        <button type="button" onClick={() => handleClearItem()}>
+        <button className="form-button" type="submit">
+          Submit
+        </button>
+        <button
+          className="form-button"
+          type="button"
+          onClick={() => handleClearItem()}
+        >
           Clear All
         </button>
       </form>

@@ -53,10 +53,14 @@ const EditUserInput = ({
         ) : (
           <span>{name}</span>
         )}
-        <button type="submit" onClick={handleEdit}>
+        <button className="form-button" type="submit" onClick={handleEdit}>
           Edit
         </button>
-        <button type="button" onClick={() => handleRemoveUser(uid)}>
+        <button
+          className="form-button"
+          type="button"
+          onClick={() => handleRemoveUser(uid)}
+        >
           X
         </button>
       </form>
