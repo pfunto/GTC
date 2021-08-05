@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { User } from '../App';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -18,7 +18,6 @@ const EditItemInput = ({
 }: EditItemInputProps) => {
   const { itemId, name, price } = item;
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [isAbleToEdit, setIsAbleToEdit] = useState<boolean>(false);
 
   function handleEdit() {
     setIsEdit(!isEdit);
@@ -72,44 +71,18 @@ const EditItemInput = ({
             <div className="item-info">{price}</div>
           </>
         )}
-        {isAbleToEdit ? (
-          <div className="item__buttons">
-            <div className="item__buttons-expand">
-              <button
-                className="form-button"
-                type="submit"
-                onClick={handleEdit}
-              >
-                edit
-              </button>
-              <button
-                className="form-button item__buttons-clear"
-                type="button"
-                onClick={() => handleRemoveItem(itemId)}
-              >
-                X
-              </button>
-            </div>
-            <button
-              className="form-button"
-              type="button"
-              onClick={() => {
-                setIsAbleToEdit(!isAbleToEdit);
-                setIsEdit(false);
-              }}
-            >
-              ?
-            </button>
-          </div>
-        ) : (
-          <button
-            className="form-button"
-            type="button"
-            onClick={() => setIsAbleToEdit(!isAbleToEdit)}
-          >
-            ?
+        <div className="item__buttons">
+          <button className="form-button" type="submit" onClick={handleEdit}>
+            edit
           </button>
-        )}
+          <button
+            className="form-button item__buttons-clear"
+            type="button"
+            onClick={() => handleRemoveItem(itemId)}
+          >
+            X
+          </button>
+        </div>
       </form>
     </StyledItemInputContainer>
   );
@@ -118,15 +91,6 @@ const EditItemInput = ({
 const StyledItemInputContainer = styled.div`
   .item-info {
     min-width: 153px;
-  }
-
-  .item__buttons {
-    position: relative;
-  }
-
-  .item__buttons-expand {
-    position: absolute;
-    left: -70px;
   }
 
   .item__buttons-clear {

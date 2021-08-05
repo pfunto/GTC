@@ -20,7 +20,7 @@ export interface Item {
   itemId: number;
   name: string;
   price: string;
-  owners?: User[];
+  owners: User[];
 }
 
 export interface UserValues {
@@ -110,7 +110,7 @@ const App = () => {
   // Item functions
   function handleAddItem(values: ItemValues) {
     const { name, price } = values;
-    setItems([...items, { itemId, name, price }]);
+    setItems([...items, { itemId, name, price, owners: [] }]);
     setItemId(itemId + 1);
   }
 
