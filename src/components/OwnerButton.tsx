@@ -47,7 +47,10 @@ const OwnerButton = ({
 const StyledOwnerButtonContainer = styled.div``;
 
 const StyledOwnerButton = styled.button`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  padding: 0.8rem;
 `;
 
 export default OwnerButton;

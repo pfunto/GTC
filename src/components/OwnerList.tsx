@@ -27,12 +27,23 @@ const OwnerList = ({
           );
         })}
       </StyledOwnerList>
-      <button type="submit">Submit</button>
+      <button className="owner-submit" type="submit">
+        Submit
+      </button>
     </StyledOwnerListContainer>
   );
 };
 
-const StyledOwnerListContainer = styled.div``;
+const StyledOwnerListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 60vh;
+  margin: auto;
+
+  .owner-submit {
+    margin: 1rem auto;
+  }
+`;
 
 const StyledOwnerList = styled.div`
   display: grid;

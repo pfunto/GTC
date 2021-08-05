@@ -66,25 +66,30 @@ const EditItemInput = ({
             </div>
           </>
         ) : (
-          <div className="item__info">
+          <>
             <img src="https://via.placeholder.com/50" alt="placeholder" />
-            <span>
-              {name} / {price}
-            </span>
-          </div>
+            <div className="item-info">{name}</div>
+            <div className="item-info">{price}</div>
+          </>
         )}
         {isAbleToEdit ? (
           <div className="item__buttons">
-            <button className="form-button" type="submit" onClick={handleEdit}>
-              edit
-            </button>
-            <button
-              className="form-button item__buttons-clear"
-              type="button"
-              onClick={() => handleRemoveItem(itemId)}
-            >
-              X
-            </button>
+            <div className="item__buttons-expand">
+              <button
+                className="form-button"
+                type="submit"
+                onClick={handleEdit}
+              >
+                edit
+              </button>
+              <button
+                className="form-button item__buttons-clear"
+                type="button"
+                onClick={() => handleRemoveItem(itemId)}
+              >
+                X
+              </button>
+            </div>
             <button
               className="form-button"
               type="button"
@@ -111,13 +116,17 @@ const EditItemInput = ({
 };
 
 const StyledItemInputContainer = styled.div`
-  .item__info {
-    display: flex;
-    align-items: center;
+  .item-info {
+    min-width: 153px;
+  }
 
-    span {
-      margin-left: 1rem;
-    }
+  .item__buttons {
+    position: relative;
+  }
+
+  .item__buttons-expand {
+    position: absolute;
+    left: -70px;
   }
 
   .item__buttons-clear {

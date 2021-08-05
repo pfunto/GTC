@@ -117,18 +117,18 @@ const App = () => {
   function handleEditItem(itemId: number, values: ItemValues) {
     const { name, price } = values;
     let newArr = [...items];
-    const curObject = newArr.find((obj) => {
+    const curItem = newArr.find((obj) => {
       return obj.itemId === itemId;
     });
 
-    if (curObject) {
-      curObject.name = name;
-      curObject.price = price;
+    if (curItem) {
+      curItem.name = name;
+      curItem.price = price;
     }
 
     setItems([...newArr]);
 
-    console.log('Edited item: ', curObject);
+    console.log('Edited item: ', curItem);
   }
 
   function handleRemoveItem(itemId: number) {
@@ -140,8 +140,6 @@ const App = () => {
   function handleClearItem() {
     setItems([]);
   }
-
-  // function handleItemOwners(itemId: number) {}
 
   // Owner Functions
 
@@ -159,6 +157,19 @@ const App = () => {
     const filteredOwners = newArr.filter((owner) => owner.uid !== uid);
     setOwners([...filteredOwners]);
   }
+
+  // function handleUpdateItemOwners(user: User) {
+  //   const { uid } = user;
+  //   const newArr = [...items];
+  //   const curItem = newArr.find((obj) => {
+  //     return obj.uid === itemId;
+  //   });
+
+  //   if (curItem) {
+  //     curItem.name = name;
+  //     curItem.price = price;
+  //   }
+  // }
 
   return (
     <StyledAppContainer>
@@ -201,6 +212,10 @@ const App = () => {
 const StyledAppContainer = styled.div`
   position: relative;
   margin: 1rem;
+
+  button:hover {
+    cursor: pointer;
+  }
 
   .form-button {
     margin-left: 0.2rem;
