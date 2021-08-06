@@ -34,6 +34,7 @@ const StyledItemList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  margin: 1rem 0;
 `;
 
 export default ItemList;

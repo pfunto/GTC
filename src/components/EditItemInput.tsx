@@ -89,6 +89,14 @@ const EditItemInput = ({
 };
 
 const StyledItemInputContainer = styled.div`
+  cursor: pointer;
+  border: #777 1px solid;
+  border-radius: 5px;
+
+  &:hover {
+    background: rgba(243, 241, 239, 0.5);
+  }
+
   .item-info {
     min-width: 153px;
   }
