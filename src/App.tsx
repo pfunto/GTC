@@ -4,7 +4,6 @@ import AddUserInput from './components/AddUserInput';
 import UserList from './components/UserList';
 import AddItemInput from './components/AddItemInput';
 import ItemList from './components/ItemList';
-import OwnerList from './components/OwnerList';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { faSquare, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -57,7 +56,6 @@ const App = () => {
   const [items, setItems] = useState<Item[]>(localItems);
   const [itemId, setItemId] = useState<number>(lastItemId);
   const [owners, setOwners] = useState<User[]>([]);
-  const [isToggleOwners, setIsToggleOwners] = useState<boolean>(false);
 
   useEffect(() => {
     console.log('users', users);
@@ -68,10 +66,6 @@ const App = () => {
     console.log('items', items);
     localStorage.setItem('itemObject', JSON.stringify(items));
   }, [items]);
-
-  useEffect(() => {
-    console.log('isToggleOwners', isToggleOwners);
-  }, [isToggleOwners]);
 
   useEffect(() => {
     console.log('owners', owners);
@@ -143,10 +137,6 @@ const App = () => {
 
   // Owner Functions
 
-  function handleToggleOwners() {
-    setIsToggleOwners(!isToggleOwners);
-  }
-
   function handleAddOwner(user: User) {
     setOwners([...owners, user]);
   }
@@ -158,18 +148,18 @@ const App = () => {
     setOwners([...filteredOwners]);
   }
 
-  // function handleUpdateItemOwners(user: User) {
-  //   const { uid } = user;
-  //   const newArr = [...items];
-  //   const curItem = newArr.find((obj) => {
-  //     return obj.uid === itemId;
-  //   });
+  function handleSetItemOwners(item: Item) {
+    const { itemId } = item;
+    const newArr = [...items];
+    const curItem = newArr.find((obj) => {
+      return obj.itemId === itemId;
+    });
 
-  //   if (curItem) {
-  //     curItem.name = name;
-  //     curItem.price = price;
-  //   }
-  // }
+    if (curItem) {
+      curItem.owners = owners;
+    }
+    setOwners([]);
+  }
 
   return (
     <StyledAppContainer>
@@ -188,23 +178,13 @@ const App = () => {
 
       <ItemList
         items={items}
+        users={users}
         handleEditItem={handleEditItem}
         handleRemoveItem={handleRemoveItem}
+        handleAddOwner={handleAddOwner}
+        handleRemoveOwner={handleRemoveOwner}
+        handleSetItemOwners={handleSetItemOwners}
       />
-
-      <button onClick={() => handleToggleOwners()}>Toggle Owners List</button>
-
-      {isToggleOwners ? (
-        <StyledOwnerContainer>
-          <OwnerList
-            users={users}
-            handleAddOwner={handleAddOwner}
-            handleRemoveOwner={handleRemoveOwner}
-          />
-        </StyledOwnerContainer>
-      ) : (
-        ''
-      )}
     </StyledAppContainer>
   );
 };
@@ -229,14 +209,6 @@ const StyledAppContainer = styled.div`
     font-size: 0.8rem;
     color: red;
   }
-`;
-
-const StyledOwnerContainer = styled.div`
-  width: 100%;
-  height: 95%;
-  position: absolute;
-  top: 0;
-  background: rgba(255, 255, 255, 0.9);
 `;
 
 export default App;

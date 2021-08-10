@@ -1,17 +1,23 @@
 import styled from 'styled-components';
-import { User } from '../App';
+import { Item, User } from '../App';
 import OwnerButton from './OwnerButton';
 
 interface OwnerListProps {
+  item: Item;
   users: User[];
   handleAddOwner: (user: User) => void;
   handleRemoveOwner: (user: User) => void;
+  handleSetItemOwners: (item: Item) => void;
+  handleCloseOwners: () => void;
 }
 
 const OwnerList = ({
+  item,
   users,
   handleAddOwner,
   handleRemoveOwner,
+  handleSetItemOwners,
+  handleCloseOwners,
 }: OwnerListProps) => {
   return (
     <StyledOwnerListContainer>
@@ -27,7 +33,14 @@ const OwnerList = ({
           );
         })}
       </StyledOwnerList>
-      <button className="owner-submit" type="submit">
+      <button
+        className="owner-submit"
+        type="submit"
+        onClick={() => {
+          handleSetItemOwners(item);
+          handleCloseOwners();
+        }}
+      >
         Submit
       </button>
     </StyledOwnerListContainer>

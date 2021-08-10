@@ -2,25 +2,43 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Item, ItemValues } from '../App';
+import { Item, ItemValues, User } from '../App';
 import CurrencyInput from './CurrencyInput';
+import OwnerList from './OwnerList';
 
 interface EditItemInputProps {
   item: Item;
+  users: User[];
   handleEditItem: (id: number, values: ItemValues) => void;
   handleRemoveItem: (id: number) => void;
+  handleAddOwner: (user: User) => void;
+  handleRemoveOwner: (user: User) => void;
+  handleSetItemOwners: (item: Item) => void;
 }
 
 const EditItemInput = ({
   item,
+  users,
   handleEditItem,
   handleRemoveItem,
+  handleAddOwner,
+  handleRemoveOwner,
+  handleSetItemOwners,
 }: EditItemInputProps) => {
   const { itemId, name, price } = item;
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isToggleOwners, setIsToggleOwners] = useState<boolean>(false);
 
   function handleEdit() {
     setIsEdit(!isEdit);
+  }
+
+  function handleOpenOwners() {
+    setIsToggleOwners(true);
+  }
+
+  function handleCloseOwners() {
+    setIsToggleOwners(false);
   }
 
   // formik
@@ -43,34 +61,41 @@ const EditItemInput = ({
 
   return (
     <StyledItemInputContainer>
-      <form onSubmit={formik.handleSubmit}>
-        {isEdit ? (
-          <>
-            <img src="https://via.placeholder.com/50" alt="placeholder" />
-            <div>
-              <input id="name" type="text" {...formik.getFieldProps('name')} />
-              {formik.touched.name && formik.errors.name ? (
-                <div className="form-error">{formik.errors.name}</div>
-              ) : null}
-            </div>
+      <StyledFormContainer>
+        <form onSubmit={formik.handleSubmit} onClick={() => handleOpenOwners()}>
+          {isEdit ? (
+            <>
+              <img src="https://via.placeholder.com/50" alt="placeholder" />
+              <div>
+                <input
+                  id="name"
+                  type="text"
+                  {...formik.getFieldProps('name')}
+                />
+                {formik.touched.name && formik.errors.name ? (
+                  <div className="form-error">{formik.errors.name}</div>
+                ) : null}
+              </div>
 
-            <div>
-              <CurrencyInput
-                placeholder="$0.00"
-                {...formik.getFieldProps('price')}
-              />
-              {formik.touched.price && formik.errors.price ? (
-                <div className="form-error">{formik.errors.price}</div>
-              ) : null}
-            </div>
-          </>
-        ) : (
-          <>
-            <img src="https://via.placeholder.com/50" alt="placeholder" />
-            <div className="item-info">{name}</div>
-            <div className="item-info">{price}</div>
-          </>
-        )}
+              <div>
+                <CurrencyInput
+                  placeholder="$0.00"
+                  {...formik.getFieldProps('price')}
+                />
+                {formik.touched.price && formik.errors.price ? (
+                  <div className="form-error">{formik.errors.price}</div>
+                ) : null}
+              </div>
+            </>
+          ) : (
+            <>
+              <img src="https://via.placeholder.com/50" alt="placeholder" />
+              <div className="item-info">{name}</div>
+              <div className="item-info">{price}</div>
+            </>
+          )}
+        </form>
+
         <div className="item__buttons">
           <button className="form-button" type="submit" onClick={handleEdit}>
             edit
@@ -83,12 +108,30 @@ const EditItemInput = ({
             X
           </button>
         </div>
-      </form>
+      </StyledFormContainer>
+
+      {isToggleOwners ? (
+        <StyledOwnerContainer>
+          <OwnerList
+            item={item}
+            users={users}
+            handleAddOwner={handleAddOwner}
+            handleRemoveOwner={handleRemoveOwner}
+            handleSetItemOwners={handleSetItemOwners}
+            handleCloseOwners={handleCloseOwners}
+          />
+        </StyledOwnerContainer>
+      ) : (
+        ''
+      )}
     </StyledItemInputContainer>
   );
 };
 
-const StyledItemInputContainer = styled.div`
+const StyledItemInputContainer = styled.div``;
+
+const StyledFormContainer = styled.div`
+  position: relative;
   cursor: pointer;
   border: #777 1px solid;
   border-radius: 5px;
@@ -97,8 +140,15 @@ const StyledItemInputContainer = styled.div`
     background: rgba(243, 241, 239, 0.5);
   }
 
-  .item-info {
+  .item-info,
+  input {
     min-width: 153px;
+  }
+
+  .item__buttons {
+    position: absolute;
+    right: 0;
+    top: 15px;
   }
 
   .item__buttons-clear {
@@ -106,11 +156,21 @@ const StyledItemInputContainer = styled.div`
   }
 
   form {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    justify-content: space-between;
-    max-width: 500px;
+    gap: 1rem;
   }
+`;
+
+const StyledOwnerContainer = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
 `;
 
 export default EditItemInput;
