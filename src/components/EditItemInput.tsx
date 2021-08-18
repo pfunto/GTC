@@ -62,7 +62,7 @@ const EditItemInput = ({
   return (
     <StyledItemInputContainer>
       <StyledFormContainer>
-        <form onSubmit={formik.handleSubmit} onClick={() => handleOpenOwners()}>
+        <form onSubmit={formik.handleSubmit}>
           {isEdit ? (
             <>
               <img src="https://via.placeholder.com/50" alt="placeholder" />
@@ -94,20 +94,26 @@ const EditItemInput = ({
               <div className="item-info">{price}</div>
             </>
           )}
+          <div className="item__buttons">
+            <button
+              className="form-button"
+              type="button"
+              onClick={handleOpenOwners}
+            >
+              add
+            </button>
+            <button className="form-button" type="submit" onClick={handleEdit}>
+              edit
+            </button>
+            <button
+              className="form-button item__buttons-clear"
+              type="button"
+              onClick={() => handleRemoveItem(itemId)}
+            >
+              X
+            </button>
+          </div>
         </form>
-
-        <div className="item__buttons">
-          <button className="form-button" type="submit" onClick={handleEdit}>
-            edit
-          </button>
-          <button
-            className="form-button item__buttons-clear"
-            type="button"
-            onClick={() => handleRemoveItem(itemId)}
-          >
-            X
-          </button>
-        </div>
       </StyledFormContainer>
 
       {isToggleOwners ? (
@@ -136,19 +142,13 @@ const StyledFormContainer = styled.div`
   border: #777 1px solid;
   border-radius: 5px;
 
-  &:hover {
-    background: rgba(243, 241, 239, 0.5);
-  }
-
   .item-info,
   input {
-    min-width: 153px;
+    max-width: 153px;
   }
 
   .item__buttons {
-    position: absolute;
-    right: 0;
-    top: 15px;
+    display: flex;
   }
 
   .item__buttons-clear {
@@ -171,6 +171,7 @@ const StyledOwnerContainer = styled.div`
   top: 0;
   left: 0;
   background: rgba(255, 255, 255, 0.9);
+  padding: 25% 0;
 `;
 
 export default EditItemInput;
