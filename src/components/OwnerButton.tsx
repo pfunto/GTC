@@ -15,14 +15,14 @@ const OwnerButton = ({
   handleRemoveOwner,
 }: OwnerButtonProps) => {
   const { name } = user;
-  const [isValidOwner, setIsValidOwner] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>();
 
   return (
     <StyledOwnerButtonContainer>
-      {isValidOwner ? (
+      {isChecked ? (
         <StyledOwnerButton
           onClick={() => {
-            setIsValidOwner(!isValidOwner);
+            setIsChecked(!isChecked);
             handleRemoveOwner(user);
           }}
         >
@@ -32,7 +32,7 @@ const OwnerButton = ({
       ) : (
         <StyledOwnerButton
           onClick={() => {
-            setIsValidOwner(!isValidOwner);
+            setIsChecked(!isChecked);
             handleAddOwner(user);
           }}
         >

@@ -23,6 +23,8 @@ const OwnerList = ({
     <StyledOwnerListContainer>
       <StyledOwnerList>
         {users.map((user, i) => {
+          // const { owners } = item;
+
           return (
             <OwnerButton
               user={user}

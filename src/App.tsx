@@ -80,19 +80,12 @@ const App = () => {
 
   function handleEditUser(uid: number, values: UserValues) {
     const { name } = values;
-    let newArr = [...users];
-    const curObject = newArr.find((obj) => {
-      return obj.uid === uid;
-    });
+    const updatedUsers = users.map((user) =>
+      user.uid === uid ? { ...user, name: name } : user
+    );
+    setUsers([...updatedUsers]);
 
-    if (curObject) {
-      curObject.name = name;
-    }
-
-    // spread operator mutates without setUser?
-    setUsers([...newArr]);
-
-    console.log('Edited name: ', curObject);
+    console.log('Edited name: ', updatedUsers);
   }
 
   function handleRemoveUser(uid: number) {
@@ -110,19 +103,12 @@ const App = () => {
 
   function handleEditItem(itemId: number, values: ItemValues) {
     const { name, price } = values;
-    let newArr = [...items];
-    const curItem = newArr.find((obj) => {
-      return obj.itemId === itemId;
-    });
+    const updatedItems = items.map((item) =>
+      item.itemId === itemId ? { ...item, name: name, price: price } : item
+    );
+    setItems([...updatedItems]);
 
-    if (curItem) {
-      curItem.name = name;
-      curItem.price = price;
-    }
-
-    setItems([...newArr]);
-
-    console.log('Edited item: ', curItem);
+    console.log('Edited item: ', updatedItems);
   }
 
   function handleRemoveItem(itemId: number) {
