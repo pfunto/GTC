@@ -5,17 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface OwnerButtonProps {
   user: User;
+  validOwner: boolean;
   handleAddOwner: (user: User) => void;
   handleRemoveOwner: (user: User) => void;
 }
 
 const OwnerButton = ({
   user,
+  validOwner,
   handleAddOwner,
   handleRemoveOwner,
 }: OwnerButtonProps) => {
   const { name } = user;
-  const [isChecked, setIsChecked] = useState<boolean>();
+  const [isChecked, setIsChecked] = useState<boolean>(validOwner);
 
   return (
     <StyledOwnerButtonContainer>

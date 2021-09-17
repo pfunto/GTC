@@ -8,9 +8,6 @@ interface ItemListProps {
   users: User[];
   handleEditItem: (id: number, values: ItemValues) => void;
   handleRemoveItem: (id: number) => void;
-  handleAddOwner: (user: User) => void;
-  handleRemoveOwner: (user: User) => void;
-  handleSetItemOwners: (item: Item) => void;
 }
 
 const ItemList = ({
@@ -18,9 +15,6 @@ const ItemList = ({
   users,
   handleEditItem,
   handleRemoveItem,
-  handleAddOwner,
-  handleRemoveOwner,
-  handleSetItemOwners,
 }: ItemListProps) => {
   return (
     <StyledItemList>
@@ -29,12 +23,10 @@ const ItemList = ({
           <EditItemInput
             key={i}
             item={item}
+            items={items}
             users={users}
             handleEditItem={handleEditItem}
             handleRemoveItem={handleRemoveItem}
-            handleAddOwner={handleAddOwner}
-            handleRemoveOwner={handleRemoveOwner}
-            handleSetItemOwners={handleSetItemOwners}
           />
         );
       })}

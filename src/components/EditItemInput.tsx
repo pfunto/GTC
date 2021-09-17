@@ -8,37 +8,33 @@ import OwnerList from './OwnerList';
 
 interface EditItemInputProps {
   item: Item;
+  items: Item[];
   users: User[];
   handleEditItem: (id: number, values: ItemValues) => void;
   handleRemoveItem: (id: number) => void;
-  handleAddOwner: (user: User) => void;
-  handleRemoveOwner: (user: User) => void;
-  handleSetItemOwners: (item: Item) => void;
 }
 
 const EditItemInput = ({
   item,
+  items,
   users,
   handleEditItem,
   handleRemoveItem,
-  handleAddOwner,
-  handleRemoveOwner,
-  handleSetItemOwners,
 }: EditItemInputProps) => {
   const { itemId, name, price } = item;
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [isToggleOwners, setIsToggleOwners] = useState<boolean>(false);
+  const [showOwners, setShowOwners] = useState<boolean>(false);
 
   function handleEdit() {
     setIsEdit(!isEdit);
   }
 
   function handleOpenOwners() {
-    setIsToggleOwners(true);
+    setShowOwners(true);
   }
 
   function handleCloseOwners() {
-    setIsToggleOwners(false);
+    setShowOwners(false);
   }
 
   // formik
@@ -116,14 +112,12 @@ const EditItemInput = ({
         </form>
       </StyledFormContainer>
 
-      {isToggleOwners ? (
+      {showOwners ? (
         <StyledOwnerContainer>
           <OwnerList
             item={item}
+            items={items}
             users={users}
-            handleAddOwner={handleAddOwner}
-            handleRemoveOwner={handleRemoveOwner}
-            handleSetItemOwners={handleSetItemOwners}
             handleCloseOwners={handleCloseOwners}
           />
         </StyledOwnerContainer>

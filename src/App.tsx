@@ -55,7 +55,6 @@ const App = () => {
   // Items state
   const [items, setItems] = useState<Item[]>(localItems);
   const [itemId, setItemId] = useState<number>(lastItemId);
-  const [owners, setOwners] = useState<User[]>([]);
 
   useEffect(() => {
     console.log('users', users);
@@ -66,10 +65,6 @@ const App = () => {
     console.log('items', items);
     localStorage.setItem('itemObject', JSON.stringify(items));
   }, [items]);
-
-  useEffect(() => {
-    console.log('owners', owners);
-  }, [owners]);
 
   // User functions
   function handleAddUser(values: UserValues) {
@@ -121,32 +116,6 @@ const App = () => {
     setItems([]);
   }
 
-  // Owner Functions
-
-  function handleAddOwner(user: User) {
-    setOwners([...owners, user]);
-  }
-
-  function handleRemoveOwner(user: User) {
-    const { uid } = user;
-    const newArr = [...owners];
-    const filteredOwners = newArr.filter((owner) => owner.uid !== uid);
-    setOwners([...filteredOwners]);
-  }
-
-  function handleSetItemOwners(item: Item) {
-    const { itemId } = item;
-    const newArr = [...items];
-    const curItem = newArr.find((obj) => {
-      return obj.itemId === itemId;
-    });
-
-    if (curItem) {
-      curItem.owners = owners;
-    }
-    setOwners([]);
-  }
-
   return (
     <StyledAppContainer>
       <AddUserInput handleAddUser={handleAddUser} />
@@ -167,9 +136,6 @@ const App = () => {
         users={users}
         handleEditItem={handleEditItem}
         handleRemoveItem={handleRemoveItem}
-        handleAddOwner={handleAddOwner}
-        handleRemoveOwner={handleRemoveOwner}
-        handleSetItemOwners={handleSetItemOwners}
       />
     </StyledAppContainer>
   );
