@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Item, User } from '../App';
 import OwnerButton from './OwnerButton';
@@ -7,10 +7,17 @@ interface OwnerListProps {
   item: Item;
   items: Item[];
   users: User[];
+  showOwners: boolean;
   setShowOwners: (bool: boolean) => void;
 }
 
-const OwnerList = ({ item, items, users, setShowOwners }: OwnerListProps) => {
+const OwnerList = ({
+  item,
+  items,
+  users,
+  showOwners,
+  setShowOwners,
+}: OwnerListProps) => {
   const [owners, setOwners] = useState<User[]>(item.owners);
 
   useEffect(() => {
@@ -37,8 +44,29 @@ const OwnerList = ({ item, items, users, setShowOwners }: OwnerListProps) => {
     }
   }
 
+  // Update Item's owners and close OwnerList
+  const ref = useRef<any>();
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      // If the modal is open and the clicked target is not within the modal,
+      // then close the modal and update owners
+      if (showOwners && ref.current && !ref.current.contains(e.target)) {
+        handleSetItemOwners(item);
+        setShowOwners(false);
+      }
+    };
+
+    document.addEventListener('mousedown', checkIfClickedOutside);
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside);
+    };
+  });
+
   return (
-    <StyledOwnerListContainer>
+    <StyledOwnerListContainer ref={ref}>
       <StyledOwnerList>
         {users.map((user, i) => {
           const { owners } = item;
@@ -55,16 +83,6 @@ const OwnerList = ({ item, items, users, setShowOwners }: OwnerListProps) => {
           );
         })}
       </StyledOwnerList>
-      <button
-        className="owner-submit"
-        type="submit"
-        onClick={() => {
-          handleSetItemOwners(item);
-          setShowOwners(false);
-        }}
-      >
-        Submit
-      </button>
     </StyledOwnerListContainer>
   );
 };

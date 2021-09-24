@@ -110,6 +110,7 @@ const EditItemInput = ({
             item={item}
             items={items}
             users={users}
+            showOwners={showOwners}
             setShowOwners={setShowOwners}
           />
         </StyledOwnerContainer>
