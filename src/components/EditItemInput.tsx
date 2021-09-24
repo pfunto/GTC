@@ -29,14 +29,6 @@ const EditItemInput = ({
     setIsEdit(!isEdit);
   }
 
-  function handleOpenOwners() {
-    setShowOwners(true);
-  }
-
-  function handleCloseOwners() {
-    setShowOwners(false);
-  }
-
   // formik
   const formik = useFormik({
     initialValues: {
@@ -94,7 +86,7 @@ const EditItemInput = ({
             <button
               className="form-button"
               type="button"
-              onClick={handleOpenOwners}
+              onClick={() => setShowOwners(true)}
             >
               add
             </button>
@@ -118,7 +110,7 @@ const EditItemInput = ({
             item={item}
             items={items}
             users={users}
-            handleCloseOwners={handleCloseOwners}
+            setShowOwners={setShowOwners}
           />
         </StyledOwnerContainer>
       ) : (

@@ -7,15 +7,10 @@ interface OwnerListProps {
   item: Item;
   items: Item[];
   users: User[];
-  handleCloseOwners: () => void;
+  setShowOwners: (bool: boolean) => void;
 }
 
-const OwnerList = ({
-  item,
-  items,
-  users,
-  handleCloseOwners,
-}: OwnerListProps) => {
+const OwnerList = ({ item, items, users, setShowOwners }: OwnerListProps) => {
   const [owners, setOwners] = useState<User[]>(item.owners);
 
   useEffect(() => {
@@ -65,7 +60,7 @@ const OwnerList = ({
         type="submit"
         onClick={() => {
           handleSetItemOwners(item);
-          handleCloseOwners();
+          setShowOwners(false);
         }}
       >
         Submit
